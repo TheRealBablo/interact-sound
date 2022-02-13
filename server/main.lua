@@ -90,11 +90,26 @@ AddEventHandler('InteractSound_SV:PlayWithinDistance', function(maxDistance, sou
   end
 end)
 
+RegisterNetEvent('InteractSound_SV:stopSound')
+AddEventHandler('InteractSound_SV:stopSound', function()
+  TriggerClientEvent('InteractSound_SV:stopSound', -1)
+end)
+
+RegisterNetEvent('InteractSound_SV:stopSoundWithinDistance')
+AddEventHandler('InteractSound_SV:stopSoundWithinDistance', function(maxDistance)
+    local src = source
+    local DistanceLimit = 300
+    if maxDistance < DistanceLimit then
+	    TriggerClientEvent('InteractSound_CL:stopSoundWithinDistance', -1, GetEntityCoords(GetPlayerPed(src)), maxDistance)
+    end
+end)
+
 RegisterNetEvent('InteractSound_SV:PlayWithinDistance')
 AddEventHandler('InteractSound_SV:PlayWithinDistance', function(maxDistance, soundFile, soundVolume)
     local src = source
     local DistanceLimit = 300
     if maxDistance < DistanceLimit then
+      print('DARHI')
 	TriggerClientEvent('InteractSound_CL:PlayWithinDistance', -1, GetEntityCoords(GetPlayerPed(src)), maxDistance, soundFile, soundVolume)
     else
         print(('[interact-sound] [^3WARNING^7] %s attempted to trigger InteractSound_SV:PlayWithinDistance over the distance limit ' .. DistanceLimit):format(GetPlayerName(src)))
