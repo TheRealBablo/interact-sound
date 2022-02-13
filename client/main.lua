@@ -80,12 +80,29 @@ AddEventHandler('InteractSound_CL:PlayWithinDistance', function(otherPlayerCoord
 		local myCoords = GetEntityCoords(PlayerPedId())
 		local distance = #(myCoords - otherPlayerCoords)
 
+        print(112)
+
 		if distance < maxDistance then
 			SendNUIMessage({
 				transactionType = 'playSound',
 				transactionFile  = soundFile,
 				transactionVolume = soundVolume or standardVolumeOutput
 			})
+		end
+	end
+end)
+
+RegisterNetEvent('InteractSound_CL:stopSoundWithinDistance')
+AddEventHandler('InteractSound_CL:stopSoundWithinDistance', function(targetPlayerCoords, maxDistance)
+	if hasPlayerLoaded then
+		local playerPedCoords = GetEntityCoords(PlayerPedId())
+		local dst = #(playerPedCoords - targetPlayerCoords)
+
+		if dst < maxDistance then
+            print(1)
+            SendNUIMessage({
+                transactionType = 'stopSound'
+            })
 		end
 	end
 end)
