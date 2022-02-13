@@ -19,6 +19,10 @@
                   audioPlayer.play();
 
                 }
+
+                if (event.data.transactionType == "stopSound") {
+                  audioPlayer.pause();
+                }
             });
         </script>
     </head>
